@@ -173,7 +173,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dijkstra.cpp" />
+    <ClCompile Include="Edge.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="NodeMap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dijkstra.h" />
+    <ClInclude Include="Edge.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

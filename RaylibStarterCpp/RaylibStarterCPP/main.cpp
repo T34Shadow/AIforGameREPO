@@ -20,6 +20,9 @@
 ********************************************************************************************/
 
 #pragma warning( push , 0)
+
+#include"NodeMap.h"
+
 #include <raylib.h>
 
 #define RAYGUI_IMPLEMENTATION
@@ -35,9 +38,27 @@ int main(int argc, char* argv[])
     int screenWidth = 800;
     int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "AI Node Grid");
 
     SetTargetFPS(60);
+
+    //ASCII art map
+    //--------------------------------------------------------------------------------------
+    
+    std::vector<std::string> map;
+    map.push_back("000000000000");
+    map.push_back("010111111110");
+    map.push_back("010100000010");
+    map.push_back("010101110010");
+    map.push_back("010111011010");
+    map.push_back("010000000010");
+    map.push_back("011111111110");
+    map.push_back("000000000000");
+
+    NodeMap maze;
+    int cellSize = 32;
+    maze.Initialise(map, cellSize);
+
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -45,8 +66,8 @@ int main(int argc, char* argv[])
     {
         // Update
         //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+
+
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -54,7 +75,7 @@ int main(int argc, char* argv[])
 
         ClearBackground(RAYWHITE);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        maze.DrawMap();
 
         EndDrawing();
         //----------------------------------------------------------------------------------
