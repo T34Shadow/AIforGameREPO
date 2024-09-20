@@ -8,6 +8,7 @@
 class NodeMap
 {
 public:
+
 	NodeMap();
 	~NodeMap();
 
@@ -19,4 +20,6 @@ public:
 	Node* GetNode(int x, int y);
 	void DrawMap();
 
+private:
+	static std::vector<Node*>DijstrasSearch(Node* start, Node* end);
 };

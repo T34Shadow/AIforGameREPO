@@ -46,14 +46,16 @@ int main(int argc, char* argv[])
     //--------------------------------------------------------------------------------------
     
     std::vector<std::string> map;
-    map.push_back("000000000000");
-    map.push_back("010111111110");
-    map.push_back("010100000010");
-    map.push_back("010101110010");
-    map.push_back("010111011010");
-    map.push_back("010000000010");
-    map.push_back("011111111110");
-    map.push_back("000000000000");
+    map.push_back("0000000000000000");
+    map.push_back("0101111111111110");
+    map.push_back("0101000001000010");
+    map.push_back("0111011111110010");
+    map.push_back("0101110000011110");
+    map.push_back("0100011111010000");
+    map.push_back("0101110001111110");
+    map.push_back("0100011111000010");
+    map.push_back("0111110001111110");
+    map.push_back("0000000000000000");
 
     NodeMap maze;
     int cellSize = 32;

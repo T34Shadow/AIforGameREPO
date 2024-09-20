@@ -105,3 +105,15 @@ void NodeMap::DrawMap()
 		}
 	}
 }
+
+std::vector<Node*> NodeMap::DijstrasSearch(Node* start, Node* end)
+{
+
+	std::vector<Node*>openList;
+	bool found;
+	Node* testPOS; 
+
+	
+
+	return std::vector<Node*>();
+}
