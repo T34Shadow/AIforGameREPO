@@ -11,7 +11,7 @@ NodeMap::~NodeMap()
 void NodeMap::Initialise(std::vector<std::string> _map, int _cellSize)
 {
 	cellSize = _cellSize;
-	const char wall = 0;
+	const char wall = '0';
 
 	height = _map.size();
 	width = _map[0].size();
@@ -32,7 +32,7 @@ void NodeMap::Initialise(std::vector<std::string> _map, int _cellSize)
 		{
 			char tile = x < line.size() ? line[x] : wall;
 
-			nodes[x + width * y] = tile == wall ? nullptr : new Node(((float)x + 0.5f) * cellSize, ((float)y + 0.5) * cellSize);
+			nodes[x + width * y] = tile == wall ? nullptr : new Node(((float)x + 0.5f) * cellSize, ((float)y + 0.5f) * cellSize);
 
 		}
 	}
@@ -68,7 +68,7 @@ void NodeMap::Initialise(std::vector<std::string> _map, int _cellSize)
 Node* NodeMap::GetNode(int x, int y)
 {
 
-	return nodes[(x + width) * y];
+	return nodes[x + width * y];
 
 }
 
@@ -85,7 +85,7 @@ void NodeMap::DrawMap()
 	lineColor.g = 0;
 	lineColor.b = 0;
 
-	for (int y = 0; height; y++)
+	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
 		{
