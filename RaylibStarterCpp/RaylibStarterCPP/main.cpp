@@ -23,7 +23,8 @@
 
 #include"NodeMap.h"
 
-#include <raylib.h>
+
+#include "Game.h"
 
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
@@ -39,27 +40,16 @@ int main(int argc, char* argv[])
     int screenHeight = 450;
 
     InitWindow(screenWidth, screenHeight, "AI Node Grid");
-
+    
     SetTargetFPS(60);
+
+    Game primaryGame;
+    
 
     //ASCII art map
     //--------------------------------------------------------------------------------------
     
-    std::vector<std::string> map;
-    map.push_back("0000000000000000");
-    map.push_back("0101111111111110");
-    map.push_back("0101000001000010");
-    map.push_back("0111011111110010");
-    map.push_back("0101110000011110");
-    map.push_back("0100011111010000");
-    map.push_back("0101110001111110");
-    map.push_back("0100011111000010");
-    map.push_back("0111110001111110");
-    map.push_back("0000000000000000");
-
-    NodeMap maze;
-    int cellSize = 32;
-    maze.Initialise(map, cellSize);
+   
 
     //--------------------------------------------------------------------------------------
 
@@ -69,15 +59,14 @@ int main(int argc, char* argv[])
         // Update
         //----------------------------------------------------------------------------------
 
-
+        primaryGame.Update();
 
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
-
-        maze.DrawMap();
+        primaryGame.Draw();
 
         EndDrawing();
         //----------------------------------------------------------------------------------
