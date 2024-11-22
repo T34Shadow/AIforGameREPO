@@ -18,9 +18,10 @@ public:
 		Edge(Node* _target, float _cost) : target(_target), cost(_cost) {}
 	};
 
+	int gScore;
+	Node* previous;
 	Vector2 pos;
 	std::vector<Edge> connections;
-
 	void ConnectTo(Node* other, float cost);
-
+	
 };
