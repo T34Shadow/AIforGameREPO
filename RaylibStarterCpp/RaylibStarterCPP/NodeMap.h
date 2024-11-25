@@ -20,6 +20,6 @@ public:
 	Node* GetNode(int x, int y);
 	void DrawMap();
 
+	Node* GetClosestNode(Vector2 worldPos);
 private:
-	static std::vector<Node*>DijstrasSearch(Node* start, Node* end);
 };

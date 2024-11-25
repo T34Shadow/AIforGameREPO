@@ -8,6 +8,9 @@
 Game::Game()
 {
     std::vector<std::string> map;
+    int cellSize = 32;
+    //ASCII art map
+    //--------------------------------------------------------------------------------------
     map.push_back("0000000000000000");
     map.push_back("0101111111111110");
     map.push_back("0101000001000010");
@@ -19,9 +22,12 @@ Game::Game()
     map.push_back("0111110001111110");
     map.push_back("0000000000000000");
 
-   
-    int cellSize = 32;
     maze.Initialise(map, cellSize);
+    //--------------------------------------------------------------------------------------
+
+    start = nullptr;
+    end = nullptr;
+
 }
 
 Game::~Game()
@@ -31,12 +37,51 @@ Game::~Game()
 
 void Game::Update()
 {
-	
+    
+    //set the end pos
+    if (IsMouseButtonPressed(1))
+    {
+        std::cout << "right mouse button pressed" << std::endl;
+        std::cout << "Set end pos" << std::endl;
+
+        Vector2 mousePos = GetMousePosition();
+        end = maze.GetClosestNode(Vector2{ mousePos.x, mousePos.y });
+        std::cout << end->pos.x << ":" << end->pos.y << std::endl;
+    }
+
+    //set the start pos
+    if (IsMouseButtonPressed(0))
+    {
+        std::cout << "left mouse button pressed" << std::endl;
+        std::cout << "Set start pos" << std::endl;
+
+        Vector2 mousePos = GetMousePosition();
+        start = maze.GetClosestNode(Vector2{ mousePos.x, mousePos.y });
+        std::cout << start->pos.x << ":" << start->pos.y << std::endl;
+    }
+    if (start != nullptr && end != nullptr)
+    {
+        nodePath = DijkstrasSearch(start, end);
+        pathColour = { 255,255,255,255 };
+
+    }
 }
 
 void Game::Draw()
 {
     maze.DrawMap();
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        DrawPath(nodePath, pathColour);
+    }
+}
+
+void Game::DrawPath(std::vector<Node*> path, Color pathColour)
+{
+    for (int i = 1; i < path.size(); i++)
+    {
+        DrawLine(path[i]->pos.x, path[i]->pos.y, path[i]->previous->pos.x, path[i]->previous->pos.y,pathColour);
+    }
 }
 
 std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
@@ -64,8 +109,8 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
     std::vector<Node*>closedList;
 
     openList.push_back(startNode);
-
-
+    Node* currentNode = nullptr;
+    
     //while the open list is not empty
     while (!openList.empty());
     {
@@ -76,12 +121,13 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
         };
         std::sort(openList.begin(), openList.end(),sortBygScore());
 
-        Node* currentNode = openList[0];
+        currentNode = openList[0];
 
         //exit the loop if the current and end node are the same.
         if (currentNode == endNode)
         {
-            // breal or contunie while loop.
+            // break or contunie while loop.
+
         }
 
         openList.erase(openList.begin()); //remove current node from the open list
@@ -89,13 +135,15 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
 
         for (int i = 0; i < currentNode->connections.size(); i++)
         {
-            if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == closedList.end()) // is the node in the closed list
+            // is the node in the closed list
+            if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == closedList.end()) 
             {
 
                 int gScore = currentNode->gScore + currentNode->connections[i].cost;
                 openList.push_back(currentNode->connections[i].target);
 
-                if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) == openList.end()) // is the node in the openlist
+                // is the node in the openlist
+                if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) == openList.end()) 
                 {
                     currentNode->connections[i].target->gScore = gScore;
                     currentNode->connections[i].target->previous = currentNode;
@@ -106,18 +154,19 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
                     currentNode->connections[i].target->gScore = gScore;
                     currentNode->connections[i].target->previous = currentNode;
                 }
-            }            
-            
+            }               
         }
-
-
-
-
+    }
+    std::vector<Node*> newPath;
+    
+    currentNode = endNode;
+    while (currentNode != nullptr)
+    {
+        newPath.push_back(currentNode);
+        currentNode = currentNode->previous;
     }
 
-
-    std::vector<Node*> path;
-    return path;
+    return newPath;
 }
 
 

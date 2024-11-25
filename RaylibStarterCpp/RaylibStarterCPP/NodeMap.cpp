@@ -72,6 +72,25 @@ Node* NodeMap::GetNode(int x, int y)
 
 }
 
+Node* NodeMap::GetClosestNode(Vector2 worldPos)
+{
+	int i = (int)(worldPos.x / cellSize);
+	if (i < 0 || i >= width)
+	{
+		std::cout << "Invalid pos" << std::endl;
+		return nullptr;
+	}
+
+	int j = (int)(worldPos.y / cellSize);
+	if (j < 0 || i >= height)
+	{
+		std::cout << "Invalid pos" << std::endl;
+		return nullptr;
+	}
+
+	return GetNode(i, j);
+}
+
 void NodeMap::DrawMap()
 {
 	Color cellColor;
@@ -106,14 +125,3 @@ void NodeMap::DrawMap()
 	}
 }
 
-std::vector<Node*> NodeMap::DijstrasSearch(Node* start, Node* end)
-{
-
-	std::vector<Node*>openList;
-	bool found;
-	Node* testPOS; 
-
-	
-
-	return std::vector<Node*>();
-}

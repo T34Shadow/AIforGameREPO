@@ -45,14 +45,6 @@ int main(int argc, char* argv[])
 
     Game primaryGame;
     
-
-    //ASCII art map
-    //--------------------------------------------------------------------------------------
-    
-   
-
-    //--------------------------------------------------------------------------------------
-
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
