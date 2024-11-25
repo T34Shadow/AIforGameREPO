@@ -42,10 +42,10 @@ void Game::Update()
     if (IsMouseButtonPressed(1))
     {
         std::cout << "right mouse button pressed" << std::endl;
-        std::cout << "Set end pos" << std::endl;
 
         Vector2 mousePos = GetMousePosition();
         end = maze.GetClosestNode(Vector2{ mousePos.x, mousePos.y });
+        std::cout << "Set end pos" << ": ";
         std::cout << end->pos.x << ":" << end->pos.y << std::endl;
     }
 
@@ -53,10 +53,10 @@ void Game::Update()
     if (IsMouseButtonPressed(0))
     {
         std::cout << "left mouse button pressed" << std::endl;
-        std::cout << "Set start pos" << std::endl;
 
         Vector2 mousePos = GetMousePosition();
         start = maze.GetClosestNode(Vector2{ mousePos.x, mousePos.y });
+        std::cout << "Set start pos" << ": ";
         std::cout << start->pos.x << ":" << start->pos.y << std::endl;
     }
     if (start != nullptr && end != nullptr)
@@ -83,6 +83,12 @@ void Game::DrawPath(std::vector<Node*> path, Color pathColour)
         DrawLine(path[i]->pos.x, path[i]->pos.y, path[i]->previous->pos.x, path[i]->previous->pos.y,pathColour);
     }
 }
+
+//sort openlsit by the gScore of each node;
+struct sortBygScore
+{
+    bool operator()(Node* a, Node* b) const { return a->gScore < b->gScore; }
+};
 
 std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
 {
@@ -114,11 +120,6 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
     //while the open list is not empty
     while (!openList.empty());
     {
-        //sort openlsit by the gScore of each node;
-        struct sortBygScore
-        {
-            bool operator()(Node* a, Node* b) const { return a->gScore < b->gScore; }
-        };
         std::sort(openList.begin(), openList.end(),sortBygScore());
 
         currentNode = openList[0];
