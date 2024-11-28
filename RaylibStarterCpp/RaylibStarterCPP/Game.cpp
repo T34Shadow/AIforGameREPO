@@ -14,12 +14,12 @@ Game::Game()
     map.push_back("0000000000000000");
     map.push_back("0101111111111110");
     map.push_back("0101000001000010");
-    map.push_back("0111011111110010");
+    map.push_back("0101011111110010");
     map.push_back("0101110000011110");
     map.push_back("0100011111010000");
     map.push_back("0101110001111110");
     map.push_back("0100011111000010");
-    map.push_back("0111110001111110");
+    map.push_back("0101110001111110");
     map.push_back("0000000000000000");
 
     maze.Initialise(map, cellSize);
@@ -41,46 +41,56 @@ void Game::Update()
     //set the end pos
     if (IsMouseButtonPressed(1))
     {
-        std::cout << "right mouse button pressed" << std::endl;
+        //std::cout << "right mouse button pressed" << std::endl;
 
         Vector2 mousePos = GetMousePosition();
         end = maze.GetClosestNode(Vector2{ mousePos.x, mousePos.y });
-        std::cout << "Set end pos" << ": ";
-        std::cout << end->pos.x << ":" << end->pos.y << std::endl;
+        if (end != nullptr)
+        {
+            std::cout << "Set end pos" << ": ";
+            std::cout << end->pos.x << ":" << end->pos.y << std::endl;
+        }
     }
 
     //set the start pos
     if (IsMouseButtonPressed(0))
     {
-        std::cout << "left mouse button pressed" << std::endl;
+        //std::cout << "left mouse button pressed" << std::endl;
 
         Vector2 mousePos = GetMousePosition();
         start = maze.GetClosestNode(Vector2{ mousePos.x, mousePos.y });
-        std::cout << "Set start pos" << ": ";
-        std::cout << start->pos.x << ":" << start->pos.y << std::endl;
+        if (start != nullptr)
+        {
+            std::cout << "Set start pos" << ": ";
+            std::cout << start->pos.x << ":" << start->pos.y << std::endl;
+        }
     }
     if (start != nullptr && end != nullptr)
     {
-        nodePath = DijkstrasSearch(start, end);
-        pathColour = { 255,255,255,255 };
-
+        if (IsKeyPressed(KEY_ENTER))
+        {
+            nodePath = DijkstrasSearch(start, end);
+            pathColour = { 255,0,0,255 };
+        }
     }
 }
 
 void Game::Draw()
 {
     maze.DrawMap();
-    if (IsKeyPressed(KEY_SPACE))
+    if (!nodePath.empty())
     {
+
         DrawPath(nodePath, pathColour);
     }
+    
 }
 
 void Game::DrawPath(std::vector<Node*> path, Color pathColour)
 {
     for (int i = 1; i < path.size(); i++)
     {
-        DrawLine(path[i]->pos.x, path[i]->pos.y, path[i]->previous->pos.x, path[i]->previous->pos.y,pathColour);
+        DrawLine(path[i]->pos.x, path[i]->pos.y, path[i-1]->pos.x, path[i-1]->pos.y,pathColour);
     }
 }
 
@@ -118,7 +128,7 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
     Node* currentNode = nullptr;
     
     //while the open list is not empty
-    while (!openList.empty());
+    while (!openList.empty())
     {
         std::sort(openList.begin(), openList.end(),sortBygScore());
 
@@ -128,7 +138,7 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
         if (currentNode == endNode)
         {
             // break or contunie while loop.
-
+            break;
         }
 
         openList.erase(openList.begin()); //remove current node from the open list
@@ -141,7 +151,7 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
             {
 
                 int gScore = currentNode->gScore + currentNode->connections[i].cost;
-                openList.push_back(currentNode->connections[i].target);
+                //openList.push_back(currentNode->connections[i].target);
 
                 // is the node in the openlist
                 if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) == openList.end()) 
@@ -159,15 +169,27 @@ std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
         }
     }
     std::vector<Node*> newPath;
-    
-    currentNode = endNode;
+    if (!endNode)
+    {
+        currentNode = endNode;
+
+    }
+    if (openList.empty())
+    {
+        std::cout << "Path NOT found" << std::endl;
+        return std::vector<Node*>();
+    }
     while (currentNode != nullptr)
     {
-        newPath.push_back(currentNode);
+        newPath.insert(newPath.begin(), currentNode);
+        //newPath.push_back(currentNode);
         currentNode = currentNode->previous;
     }
-
+   
+    std::cout << "Path found" << std::endl;
+    std::cout << newPath.size() << std::endl;
     return newPath;
+    
 }
 
 

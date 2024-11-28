@@ -82,7 +82,7 @@ Node* NodeMap::GetClosestNode(Vector2 worldPos)
 	}
 
 	int j = (int)(worldPos.y / cellSize);
-	if (j < 0 || i >= height)
+	if (j < 0 || j >= height)
 	{
 		std::cout << "Invalid pos" << std::endl;
 		return nullptr;
