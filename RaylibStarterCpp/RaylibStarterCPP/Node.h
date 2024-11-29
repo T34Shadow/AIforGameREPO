@@ -1,6 +1,9 @@
 #pragma once
-#include "vector"
-#include "raymath.h"
+#include <vector>
+#include <raymath.h>
+#include <string>
+#include <iostream>
+#include <algorithm>
 
 class Node
 {
@@ -22,6 +25,7 @@ public:
 	Node* previous;
 	Vector2 pos;
 	std::vector<Edge> connections;
+
 	void ConnectTo(Node* other, float cost);
 	
 };

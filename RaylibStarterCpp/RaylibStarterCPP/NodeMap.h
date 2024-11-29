@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Node.h"
-#include <vector>
-#include <raymath.h>
-#include <iostream>
 
 class NodeMap
 {

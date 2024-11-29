@@ -2,7 +2,7 @@
 
 #include "Game.h"
 
-#include <string>
+
 
 
 Game::Game()
@@ -28,6 +28,9 @@ Game::Game()
     start = nullptr;
     end = nullptr;
 
+    agent.SetSpeed(64);
+    agent.SetNode(maze.GetNode(3, 1));
+    agent.SetPos(agent.GetNode()->pos);
 }
 
 Game::~Game()
@@ -35,7 +38,7 @@ Game::~Game()
 	
 }
 
-void Game::Update()
+void Game::Update(float delta)
 {
     
     //set the end pos
@@ -65,25 +68,23 @@ void Game::Update()
             std::cout << start->pos.x << ":" << start->pos.y << std::endl;
         }
     }
-    if (start != nullptr && end != nullptr)
+    if (IsKeyPressed(KEY_SPACE))
     {
-        if (IsKeyPressed(KEY_ENTER))
-        {
-            nodePath = DijkstrasSearch(start, end);
-            pathColour = { 255,0,0,255 };
-        }
+        agent.GoToNode(end);
     }
+    
+    agent.Update(delta);
+
 }
 
 void Game::Draw()
 {
     maze.DrawMap();
-    if (!nodePath.empty())
+    agent.Draw();
+    if (!agent.GetPath().empty())
     {
-
-        DrawPath(nodePath, pathColour);
+        DrawPath(agent.GetPath(), pathColour);
     }
-    
 }
 
 void Game::DrawPath(std::vector<Node*> path, Color pathColour)
@@ -94,102 +95,7 @@ void Game::DrawPath(std::vector<Node*> path, Color pathColour)
     }
 }
 
-//sort openlsit by the gScore of each node;
-struct sortBygScore
-{
-    bool operator()(Node* a, Node* b) const { return a->gScore < b->gScore; }
-};
 
-std::vector<Node*> Game::DijkstrasSearch(Node* startNode, Node* endNode)
-{
-    //Validate the input
-    if (startNode == nullptr || endNode == nullptr)
-    {
-        std::cout << "Invaild Input" << std::endl;
-        return std::vector<Node*>();
-    }
-    if (startNode == endNode)
-    {
-        std::cout << "Emtpy path, start and end node are the same" << std::endl;
-        std::vector<Node*>path;
-        path.push_back(startNode);
-        return path;
-    }
 
-    //Initialise the starting node
-    startNode->gScore = 0;
-    startNode->previous = nullptr;
-
-    //Create temp list for storing nodes we have visited 
-    std::vector<Node*> openList;
-    std::vector<Node*>closedList;
-
-    openList.push_back(startNode);
-    Node* currentNode = nullptr;
-    
-    //while the open list is not empty
-    while (!openList.empty())
-    {
-        std::sort(openList.begin(), openList.end(),sortBygScore());
-
-        currentNode = openList[0];
-
-        //exit the loop if the current and end node are the same.
-        if (currentNode == endNode)
-        {
-            // break or contunie while loop.
-            break;
-        }
-
-        openList.erase(openList.begin()); //remove current node from the open list
-        closedList.push_back(currentNode); //add current node to the closed list
-
-        for (int i = 0; i < currentNode->connections.size(); i++)
-        {
-            // is the node in the closed list
-            if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == closedList.end()) 
-            {
-
-                int gScore = currentNode->gScore + currentNode->connections[i].cost;
-                //openList.push_back(currentNode->connections[i].target);
-
-                // is the node in the openlist
-                if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) == openList.end()) 
-                {
-                    currentNode->connections[i].target->gScore = gScore;
-                    currentNode->connections[i].target->previous = currentNode;
-                    openList.push_back(currentNode->connections[i].target);
-                }
-                else if (gScore < currentNode->connections[i].target->gScore)
-                {
-                    currentNode->connections[i].target->gScore = gScore;
-                    currentNode->connections[i].target->previous = currentNode;
-                }
-            }               
-        }
-    }
-    std::vector<Node*> newPath;
-    if (!endNode)
-    {
-        currentNode = endNode;
-
-    }
-    if (openList.empty())
-    {
-        std::cout << "Path NOT found" << std::endl;
-        return std::vector<Node*>();
-    }
-    while (currentNode != nullptr)
-    {
-        newPath.insert(newPath.begin(), currentNode);
-        //newPath.push_back(currentNode);
-        currentNode = currentNode->previous;
-    }
-   
-    std::cout << "Path found" << std::endl;
-    std::cout << newPath.size() << std::endl;
-    return newPath;
-    
-}
 
 

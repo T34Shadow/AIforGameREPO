@@ -1,7 +1,5 @@
 #pragma once
-#include "NodeMap.h"
-#include "vector"
-#include <algorithm>
+#include "PathAgent.h"
 
 class Game
 {
@@ -10,16 +8,16 @@ public:
 	Game();
 	~Game();
 
-	void Update();
+	void Update(float delta);
 	void Draw();
 
 	void DrawPath(std::vector<Node*> path, Color pathColour);
-	std::vector<Node*>DijkstrasSearch(Node* startNode, Node* endNode);
 
 private:
 	NodeMap maze;
 	Node* start;
 	Node* end;
 	std::vector<Node*> nodePath;
-	Color pathColour;
+	Color pathColour{ 255,0,0,255 };
+	PathAgent agent;
 };

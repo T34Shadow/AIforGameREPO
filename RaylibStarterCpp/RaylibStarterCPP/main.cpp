@@ -50,8 +50,8 @@ int main(int argc, char* argv[])
     {
         // Update
         //----------------------------------------------------------------------------------
-
-        primaryGame.Update();
+        float deltaTime = GetFrameTime();
+        primaryGame.Update(deltaTime);
 
         // Draw
         //----------------------------------------------------------------------------------
