@@ -23,5 +23,4 @@ public:
 	std::vector<Node*> GetPath();
 	Node* GetNode();
 	Vector2 GetPos();
-	std::vector<Node*>DijkstrasSearch(Node* startNode, Node* endNode);
 };

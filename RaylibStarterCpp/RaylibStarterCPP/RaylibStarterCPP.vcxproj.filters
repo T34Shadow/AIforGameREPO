@@ -30,6 +30,9 @@
     <ClCompile Include="PathAgent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AI_Algorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NodeMap.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PathAgent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AI_Algorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

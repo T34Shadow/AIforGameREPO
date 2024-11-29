@@ -16,8 +16,8 @@ Game::Game()
     map.push_back("0101000001000010");
     map.push_back("0101011111110010");
     map.push_back("0101110000011110");
-    map.push_back("0100011111010000");
-    map.push_back("0101110001111110");
+    map.push_back("0100011111000000");
+    map.push_back("0111110001111110");
     map.push_back("0100011111000010");
     map.push_back("0101110001111110");
     map.push_back("0000000000000000");

@@ -6,6 +6,11 @@ NodeMap::NodeMap()
 
 NodeMap::~NodeMap()
 {
+	for (int i = 0; i < width * height; i++)
+	{
+		delete nodes[i];
+	}
+	delete[] nodes;
 }
 
 void NodeMap::Initialise(std::vector<std::string> _map, int _cellSize)

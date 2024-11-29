@@ -22,6 +22,8 @@ public:
 	};
 
 	int gScore;
+	int fScore;
+	int hScore;
 	Node* previous;
 	Vector2 pos;
 	std::vector<Edge> connections;
