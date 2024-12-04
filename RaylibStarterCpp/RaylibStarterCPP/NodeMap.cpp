@@ -54,15 +54,17 @@ void NodeMap::Initialise(std::vector<std::string> _map, int _cellSize)
 				Node* nodeWest = x == 0 ? nullptr : GetNode(x - 1, y);
 				if (nodeWest)
 				{
-					node->ConnectTo(nodeWest, 1);
-					nodeWest->ConnectTo(node, 1);
+					float cost = Vector2Distance(node->pos, nodeWest->pos);
+					node->ConnectTo(nodeWest, cost);
+					nodeWest->ConnectTo(node, cost);
 				}
 				
 				Node* nodeSouth = y == 0 ? nullptr : GetNode(x, y - 1);
 				if (nodeSouth)
 				{
-					node->ConnectTo(nodeSouth, 1);
-					nodeSouth->ConnectTo(node, 1);
+					float cost = Vector2Distance(node->pos, nodeSouth->pos);
+					node->ConnectTo(nodeSouth, cost);
+					nodeSouth->ConnectTo(node, cost);
 				}
 			}
 		}

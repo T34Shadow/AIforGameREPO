@@ -22,7 +22,7 @@ std::vector<Node*> AI_Algorithm::DijkstrasSearch(Node* startNode, Node* endNode)
 
     //Create temp list for storing nodes we have visited 
     std::vector<Node*> openList;
-    std::vector<Node*>closedList;
+    std::vector<Node*> closedList; 
 
     openList.push_back(startNode);
     Node* currentNode = nullptr;
@@ -55,7 +55,7 @@ std::vector<Node*> AI_Algorithm::DijkstrasSearch(Node* startNode, Node* endNode)
             if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == closedList.end())
             {
 
-                int gScore = currentNode->gScore + currentNode->connections[i].cost;
+                float gScore = currentNode->gScore + currentNode->connections[i].cost;
                 //openList.push_back(currentNode->connections[i].target);
 
                 // is the node in the openlist
@@ -87,7 +87,6 @@ std::vector<Node*> AI_Algorithm::DijkstrasSearch(Node* startNode, Node* endNode)
     while (currentNode != nullptr)
     {
         newPath.insert(newPath.begin(), currentNode);
-        //newPath.push_back(currentNode);
         currentNode = currentNode->previous;
     }
 
@@ -115,23 +114,25 @@ std::vector<Node*> AI_Algorithm::AStarSearch(Node* startNode, Node* endNode)
     startNode->hScore = AI_Algorithm::ManhattanDistance(startNode->pos, endNode->pos);
     startNode->fScore = 0;
     startNode->previous = nullptr;
-    endNode->previous = nullptr;
 
+    //Create temp list for storing nodes we have visited 
     std::vector<Node*> openList;
     std::vector<Node*> closedList;
 
     openList.push_back(startNode);
+    Node* currentNode = nullptr;
 
+    //sort openlsit by the fScore of each node;
     struct sortByfScore
     {
-        bool operator()(Node* a, Node* b) const { return a->fScore > b->fScore; }
+        bool operator()(Node* a, Node* b) const { return a->fScore < b->fScore; }
     };
 
-    while (openList.size() > 0)
+    while (!openList.empty())
     {
         std::sort(openList.begin(), openList.end(), sortByfScore());
 
-        Node* currentNode = openList.front();
+        currentNode = openList[0];
 
         if (currentNode == endNode)
         {
@@ -143,12 +144,14 @@ std::vector<Node*> AI_Algorithm::AStarSearch(Node* startNode, Node* endNode)
 
         for (int i = 0; i < currentNode->connections.size(); i++)
         {
+            // is the node in the closed list
             if (std::find(closedList.begin(), closedList.end(), currentNode->connections[i].target) == closedList.end())
             {
                 float gScore = currentNode->gScore + currentNode->connections[i].cost;
                 float hScore = AI_Algorithm::ManhattanDistance(currentNode->connections[i].target->pos, endNode->pos);
                 float fScore = gScore + hScore;
 
+                // is the node in the openlist
                 if (std::find(openList.begin(), openList.end(), currentNode->connections[i].target) == openList.end())
                 {
                     currentNode->connections[i].target->gScore = gScore;
@@ -156,7 +159,7 @@ std::vector<Node*> AI_Algorithm::AStarSearch(Node* startNode, Node* endNode)
                     currentNode->connections[i].target->previous = currentNode;
                     openList.push_back(currentNode->connections[i].target);
                 }
-                else if (fScore < currentNode->connections[i].target->fScore)
+                else if (gScore < currentNode->connections[i].target->gScore)
                 {
                     currentNode->connections[i].target->gScore = gScore;
                     currentNode->connections[i].target->fScore = fScore;
@@ -165,24 +168,25 @@ std::vector<Node*> AI_Algorithm::AStarSearch(Node* startNode, Node* endNode)
             }
         }
     }
-
-    std::vector<Node*> path;
-
-    Node* currentNode = endNode;
-
-    while (currentNode != nullptr)
+    std::vector<Node*> newPath;
+    if (!endNode)
     {
-        path.insert(path.begin(), currentNode);
-        currentNode = currentNode->previous;
+        currentNode = endNode;
     }
-
     if (openList.empty())
     {
         std::cout << "Path NOT found" << std::endl;
         return std::vector<Node*>();
     }
-
-    return path;
+    while (currentNode != nullptr)
+    {
+        newPath.insert(newPath.begin(), currentNode);
+        currentNode = currentNode->previous;
+    }
+    
+    std::cout << "Path found" << std::endl;
+    std::cout << newPath.size() << std::endl;
+    return newPath;
 }
 
 float AI_Algorithm::ManhattanDistance(Vector2 a, Vector2 b)

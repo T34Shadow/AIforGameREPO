@@ -28,7 +28,7 @@ Game::Game()
     start = nullptr;
     end = nullptr;
 
-    agent.SetSpeed(64);
+    agent.SetSpeed(300);
     agent.SetNode(maze.GetNode(3, 1));
     agent.SetPos(agent.GetNode()->pos);
 }
@@ -71,6 +71,7 @@ void Game::Update(float delta)
     if (IsKeyPressed(KEY_SPACE))
     {
         agent.GoToNode(end);
+        std::cout << "Start" << std::endl;
     }
     
     agent.Update(delta);
