@@ -181,6 +181,7 @@
     <ClCompile Include="PathAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AgentFSM.h" />
     <ClInclude Include="AI_Algorithm.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Node.h" />

@@ -1,5 +1,5 @@
 #pragma once
-#include "Node.h"
+#include "NodeMap.h"
 
 class AI_Algorithm
 {
