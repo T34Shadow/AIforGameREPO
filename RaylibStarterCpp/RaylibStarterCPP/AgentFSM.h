@@ -12,7 +12,7 @@ public:
 	void Update(float delta);
 	void Draw();
 
-	bool PathComplete()
+	bool PathComplete();
 
 private:
 	PathAgent* m_pathAgent;
