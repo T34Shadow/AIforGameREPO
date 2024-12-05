@@ -24,6 +24,14 @@ void State::Update(Agent* agent, float delta)
 	}
 }
 
+void State::Enter(Agent* agent)
+{
+}
+
+void State::Exit(Agent* agent)
+{
+}
+
 std::vector<State::Transition> State::GetTransitions()
 {
 	return m_transitions;
