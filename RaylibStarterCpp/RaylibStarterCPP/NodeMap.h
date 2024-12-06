@@ -18,5 +18,6 @@ public:
 	void DrawMap();
 
 	Node* GetClosestNode(Vector2 worldPos);
+	Node* GetRandomNode();
 private:
 };

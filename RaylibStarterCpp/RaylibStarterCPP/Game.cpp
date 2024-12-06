@@ -31,6 +31,9 @@ Game::Game()
     agent.SetSpeed(300);
     agent.SetNode(maze.GetNode(3, 1));
     agent.SetPos(agent.GetNode()->pos);
+
+    
+
 }
 
 Game::~Game()
