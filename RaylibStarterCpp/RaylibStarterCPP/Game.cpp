@@ -1,7 +1,9 @@
 
 
 #include "Game.h"
-
+#include "DisCondition.h"
+#include "State.h"
+#include "FSM.h"
 Game::Game()
 {
     std::vector<std::string> map;
@@ -24,7 +26,9 @@ Game::Game()
 
     start = nullptr;
     end = nullptr;
-        
+    
+
+
     playerAgent.SetSpeed(300);
     playerAgent.SetNode(maze.GetNode(1, 1));
     playerAgent.SetPos(playerAgent.GetNode()->pos);
@@ -42,11 +46,23 @@ Game::Game()
     AIpathAgent02->SetPos(AIpathAgent02->GetNode()->pos);
     AIpathAgent02->SetColour(Color{ 0,255,255,255 });
 
-    wander01 = new WanderBehaviour;
-    wander02 = new WanderBehaviour;
+    //Setting up an agent for the FSM
+    //FSM set up two states.
+    DistanceCondition* closerThan5 = new DistanceCondition(5.0f * maze.cellSize, true);
+    DistanceCondition* furtherThan7 = new DistanceCondition(7.0f * maze.cellSize, false);
 
-    aiAgent01 = new Agent{ &maze,wander01,AIpathAgent01};
-    aiAgent02 = new Agent{ &maze,wander02,AIpathAgent02};
+    // register these states with the FSM, so its responsible for deleting them now
+    State* wanderState = new State(new WanderBehaviour());
+    State* followState = new State(new FollowBehaviour());
+
+    wanderState->AddTransition(closerThan5, followState);
+    followState->AddTransition(furtherThan7, wanderState);
+
+    //make FSM thats starts off wandering 
+    FiniteStateMechine* fsm = new FiniteStateMechine(wanderState);
+    fsm->AddState(wanderState);
+    fsm->AddState(wanderState);
+    aiAgent01 = new Agent{ &maze,fsm,AIpathAgent01};
     
 }
 
@@ -76,7 +92,6 @@ void Game::Update(float delta)
 
     playerAgent.Update(delta);  
     aiAgent01->Update(delta);
-    aiAgent02->Update(delta);
 
 }
 
@@ -86,7 +101,6 @@ void Game::Draw()
     DrawPath(playerAgent.GetPath(), pathColour);
     playerAgent.Draw();
     aiAgent01->Draw();
-    aiAgent02->Draw();
 }
 
 void Game::DrawPath(std::vector<Node*> path, Color pathColour)

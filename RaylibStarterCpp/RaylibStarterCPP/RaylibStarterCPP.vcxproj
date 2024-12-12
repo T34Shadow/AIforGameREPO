@@ -176,6 +176,7 @@
     <ClCompile Include="AgentFSM.cpp" />
     <ClCompile Include="AI_Algorithm.cpp" />
     <ClCompile Include="Behaviour.cpp" />
+    <ClCompile Include="DisCondition.cpp" />
     <ClCompile Include="FSM.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="AI_Algorithm.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Condition.h" />
+    <ClInclude Include="DisCondition.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Node.h" />

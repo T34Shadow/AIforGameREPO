@@ -10,6 +10,8 @@ public:
 	virtual void Update(Agent* agent, float delta) = 0;
 	virtual ~Behaviour() = default;
 
+	
+
 	virtual void Enter(Agent* agent) {}
 	virtual void Exit(Agent* agent) {}
 };
@@ -27,5 +29,5 @@ private:
 	Node* targetNode;
 
 public:
-	virtual void update(Agent* agent, float delta);
+	virtual void Update(Agent* agent, float delta);
 };

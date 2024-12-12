@@ -6,7 +6,7 @@ void WanderBehaviour::Update(Agent* agent, float delta)
 	
 }
 
-void FollowBehaviour::update(Agent* agent, float delta)
+void FollowBehaviour::Update(Agent* agent, float delta)
 {
 	PathAgent* target = agent->GetTarget();
 

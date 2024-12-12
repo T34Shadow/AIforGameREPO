@@ -8,6 +8,11 @@ FiniteStateMechine::~FiniteStateMechine()
 	}
 }
 
+void FiniteStateMechine::AddState(State* _state)
+{
+	m_state.push_back(_state);
+}
+
 void FiniteStateMechine::Update(Agent* agent, float delta)
 {
 	State* newState = nullptr;
@@ -31,4 +36,9 @@ void FiniteStateMechine::Update(Agent* agent, float delta)
 
 	//update the current state
 	m_currentState->Update(agent, delta);
+}
+
+void FiniteStateMechine::Enter(Agent* agent)
+{
+	m_currentState->Enter(agent);
 }

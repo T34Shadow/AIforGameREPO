@@ -2,7 +2,7 @@
 #include "PathAgent.h"
 #include "AgentFSM.h"
 #include "Behaviour.h"
-
+class FiniteStateMechine;
 class Game
 {
 public:

@@ -4,6 +4,11 @@ State::State()
 {
 }
 
+State::State(Behaviour* behaviour)
+{
+	m_behaviours.push_back(behaviour);
+}
+
 State::~State()
 {
 	for (Behaviour* b : m_behaviours)
@@ -24,8 +29,18 @@ void State::Update(Agent* agent, float delta)
 	}
 }
 
+void State::AddTransition(Condition* _condition, State* _behaviour)
+{
+	for (int i = 0; i < m_transitions.size(); i++)
+	{
+		m_transitions[i].m_condition = _condition;
+		m_transitions[i].m_targetState = _behaviour;
+	}
+}
+
 void State::Enter(Agent* agent)
 {
+	
 }
 
 void State::Exit(Agent* agent)

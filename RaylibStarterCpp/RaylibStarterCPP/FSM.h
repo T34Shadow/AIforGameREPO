@@ -13,6 +13,9 @@ public:
 	FiniteStateMechine(State* _state) : m_currentState(_state), m_newState(nullptr) {}
 	virtual ~FiniteStateMechine();
 
-	void Update(Agent* agent, float delta);
+	void AddState(State* _state);
+
+	void Update(Agent* agent, float delta) override;
+	void Enter(Agent* agent) override;
 	
 };

@@ -7,7 +7,10 @@ class Agent : public PathAgent
 public:
 	Agent();
 	Agent(NodeMap* _nodemap, Behaviour* _behaviour, Color _color) : m_current(_behaviour), m_nodeMap(_nodemap), m_color(_color) {}
-	Agent(NodeMap* _nodemap, Behaviour* _behaviour, PathAgent* _agent) : m_current(_behaviour), m_nodeMap(_nodemap), m_pathAgent(_agent) {}
+	Agent(NodeMap* _nodemap, Behaviour* _behaviour, PathAgent* _agent) : m_current(_behaviour), m_nodeMap(_nodemap), m_pathAgent(_agent) 
+	{
+		m_current->Enter(this);
+	}
 	~Agent();
 
 	void Update(float delta);
