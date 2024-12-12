@@ -39,12 +39,7 @@ Game::Game()
     AIpathAgent01->SetNode(maze.GetNode(14, 8));
     AIpathAgent01->SetPos(AIpathAgent01->GetNode()->pos);
     AIpathAgent01->SetColour(Color{ 255,255,0,255 });
-
-    PathAgent* AIpathAgent02 = new PathAgent;
-    AIpathAgent02->SetSpeed(100);
-    AIpathAgent02->SetNode(maze.GetNode(5, 5));
-    AIpathAgent02->SetPos(AIpathAgent02->GetNode()->pos);
-    AIpathAgent02->SetColour(Color{ 0,255,255,255 });
+    AIpathAgent01->SetTarget(&playerAgent);
 
     //Setting up an agent for the FSM
     //FSM set up two states.
@@ -55,13 +50,14 @@ Game::Game()
     State* wanderState = new State(new WanderBehaviour());
     State* followState = new State(new FollowBehaviour());
 
-    wanderState->AddTransition(closerThan5, followState);
     followState->AddTransition(furtherThan7, wanderState);
+    wanderState->AddTransition(closerThan5, followState);
 
     //make FSM thats starts off wandering 
     FiniteStateMechine* fsm = new FiniteStateMechine(wanderState);
     fsm->AddState(wanderState);
-    fsm->AddState(wanderState);
+    fsm->AddState(followState);
+
     aiAgent01 = new Agent{ &maze,fsm,AIpathAgent01};
     
 }

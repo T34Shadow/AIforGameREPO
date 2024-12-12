@@ -2,7 +2,7 @@
 #include "PathAgent.h"
 #include "AI_Algorithm.h"
 #include "Behaviour.h"
-class Agent : public PathAgent
+class Agent 
 {
 public:
 	Agent();
@@ -17,7 +17,7 @@ public:
 	void Draw();
 
 	NodeMap* GetNodeMap();
-
+	PathAgent* GetPathAgent();
 	bool PathComplete();
 
 private:

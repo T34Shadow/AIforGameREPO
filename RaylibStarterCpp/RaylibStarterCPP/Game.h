@@ -24,8 +24,4 @@ private:
 
 	PathAgent playerAgent;
 	Agent* aiAgent01;
-	Agent* aiAgent02;
-
-	WanderBehaviour* wander01;
-	WanderBehaviour* wander02;
 };

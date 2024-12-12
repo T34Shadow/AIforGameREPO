@@ -40,11 +40,18 @@ void State::AddTransition(Condition* _condition, State* _behaviour)
 
 void State::Enter(Agent* agent)
 {
-	
+	for (Behaviour* b : m_behaviours)
+	{
+		b->Enter(agent);
+	}
 }
 
 void State::Exit(Agent* agent)
 {
+	for (Behaviour* b : m_behaviours)
+	{
+		b->Exit(agent);
+	}
 }
 
 std::vector<State::Transition> State::GetTransitions()

@@ -10,6 +10,7 @@ private:
 	float speed;	
 	Vector2 direction;
 	std::vector<Node*> path;
+	PathAgent* target;
 
 public:
 
@@ -18,6 +19,7 @@ public:
 	void Draw();
 
 	PathAgent* GetTarget();
+	void SetTarget(PathAgent* _agent);
 
 	void SetPos(Vector2 pos);
 	void SetNode(Node* node);

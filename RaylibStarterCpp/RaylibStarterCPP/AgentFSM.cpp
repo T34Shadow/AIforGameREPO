@@ -27,6 +27,11 @@ NodeMap* Agent::GetNodeMap()
 	return m_nodeMap;
 }
 
+PathAgent* Agent::GetPathAgent()
+{
+	return m_pathAgent;
+}
+
 bool Agent::PathComplete()
 {
 	return m_pathAgent->GetPath().empty();

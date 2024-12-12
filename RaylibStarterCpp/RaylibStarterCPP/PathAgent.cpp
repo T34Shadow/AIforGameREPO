@@ -5,7 +5,7 @@ void PathAgent::Update(float delta)
 {
     if (!path.empty())
     {
-        SetNode(path[currentIndex]);
+        
         //Calculate distance to next node. target - current pos;
         float distance = Vector2Distance({ path[currentIndex]->pos.x - pos.x }, { path[currentIndex]->pos.y - pos.y });
         direction = Vector2Normalize(Vector2{ path[currentIndex]->pos.x - pos.x , path[currentIndex]->pos.y - pos.y });
@@ -16,7 +16,7 @@ void PathAgent::Update(float delta)
         }
         else
         {
-            pos = path[currentIndex]->pos;
+            SetNode(path[currentIndex]);
             currentIndex++;
 
             //at the end of the path;
@@ -41,7 +41,12 @@ void PathAgent::Draw()
 
 PathAgent* PathAgent::GetTarget()
 {
-    return this;
+    return target;
+}
+
+void PathAgent::SetTarget(PathAgent* _agent)
+{
+    target = _agent;
 }
 
 void PathAgent::SetNode(Node* node)
