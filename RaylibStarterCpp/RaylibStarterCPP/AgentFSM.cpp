@@ -22,6 +22,11 @@ void Agent::Draw()
 	m_pathAgent->Draw();
 }
 
+NodeMap* Agent::GetNodeMap()
+{
+	return m_nodeMap;
+}
+
 bool Agent::PathComplete()
 {
 	return m_pathAgent->GetPath().empty();

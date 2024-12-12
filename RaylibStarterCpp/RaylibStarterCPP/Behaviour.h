@@ -1,5 +1,9 @@
 #pragma once
+#include <raymath.h>
+
+
 class Agent;
+class Node;
 class Behaviour
 {
 public:
@@ -14,4 +18,14 @@ class WanderBehaviour : public Behaviour
 {
 public:
 	virtual void Update(Agent* agent, float delta);
+};
+
+class FollowBehaviour : public Behaviour
+{
+private:
+	Vector2 targetPos;
+	Node* targetNode;
+
+public:
+	virtual void update(Agent* agent, float delta);
 };

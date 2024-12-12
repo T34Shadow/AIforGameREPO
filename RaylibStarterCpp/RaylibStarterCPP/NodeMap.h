@@ -19,5 +19,6 @@ public:
 
 	Node* GetClosestNode(Vector2 worldPos);
 	Node* GetRandomNode();
+	float GetCellSize();
 private:
 };

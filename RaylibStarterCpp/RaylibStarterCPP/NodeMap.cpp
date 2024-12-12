@@ -110,6 +110,11 @@ Node* NodeMap::GetRandomNode()
 	return node;
 }
 
+float NodeMap::GetCellSize()
+{
+	return cellSize;
+}
+
 void NodeMap::DrawMap()
 {
 	Color cellColor;

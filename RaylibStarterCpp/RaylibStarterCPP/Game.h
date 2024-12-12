@@ -1,5 +1,7 @@
 #pragma once
 #include "PathAgent.h"
+#include "AgentFSM.h"
+#include "Behaviour.h"
 
 class Game
 {
@@ -17,7 +19,13 @@ private:
 	NodeMap maze;
 	Node* start;
 	Node* end;
-	std::vector<Node*> nodePath;
 	Color pathColour{ 255,0,0,255 };
-	PathAgent agent;
+	std::vector<Node*> nodePath;
+
+	PathAgent playerAgent;
+	Agent* aiAgent01;
+	Agent* aiAgent02;
+
+	WanderBehaviour* wander01;
+	WanderBehaviour* wander02;
 };

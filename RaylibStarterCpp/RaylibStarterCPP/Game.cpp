@@ -2,9 +2,6 @@
 
 #include "Game.h"
 
-
-
-
 Game::Game()
 {
     std::vector<std::string> map;
@@ -12,14 +9,14 @@ Game::Game()
     //ASCII art map
     //--------------------------------------------------------------------------------------
     map.push_back("0000000000000000");
-    map.push_back("0101111111111110");
-    map.push_back("0101000001000010");
-    map.push_back("0101011111110010");
-    map.push_back("0101110000011110");
-    map.push_back("0100011111000000");
-    map.push_back("0111110001111110");
-    map.push_back("0100011111000010");
-    map.push_back("0101110001111110");
+    map.push_back("0111111111011110");
+    map.push_back("0111011111011110");
+    map.push_back("0111011111111110");
+    map.push_back("0111010000001110");
+    map.push_back("0111011111111110");
+    map.push_back("0111011111011110");
+    map.push_back("0111111111011110");
+    map.push_back("0111111111011110");
     map.push_back("0000000000000000");
 
     maze.Initialise(map, cellSize);
@@ -27,13 +24,30 @@ Game::Game()
 
     start = nullptr;
     end = nullptr;
+        
+    playerAgent.SetSpeed(300);
+    playerAgent.SetNode(maze.GetNode(1, 1));
+    playerAgent.SetPos(playerAgent.GetNode()->pos);
+    playerAgent.SetColour(Color{ 255,0,255,255 });
 
-    agent.SetSpeed(300);
-    agent.SetNode(maze.GetNode(3, 1));
-    agent.SetPos(agent.GetNode()->pos);
+    PathAgent* AIpathAgent01 = new PathAgent;
+    AIpathAgent01->SetSpeed(100);
+    AIpathAgent01->SetNode(maze.GetNode(14, 8));
+    AIpathAgent01->SetPos(AIpathAgent01->GetNode()->pos);
+    AIpathAgent01->SetColour(Color{ 255,255,0,255 });
 
+    PathAgent* AIpathAgent02 = new PathAgent;
+    AIpathAgent02->SetSpeed(100);
+    AIpathAgent02->SetNode(maze.GetNode(5, 5));
+    AIpathAgent02->SetPos(AIpathAgent02->GetNode()->pos);
+    AIpathAgent02->SetColour(Color{ 0,255,255,255 });
+
+    wander01 = new WanderBehaviour;
+    wander02 = new WanderBehaviour;
+
+    aiAgent01 = new Agent{ &maze,wander01,AIpathAgent01};
+    aiAgent02 = new Agent{ &maze,wander02,AIpathAgent02};
     
-
 }
 
 Game::~Game()
@@ -45,7 +59,7 @@ void Game::Update(float delta)
 {
     
     //set the end pos
-    if (IsMouseButtonPressed(1))
+    if (IsMouseButtonPressed(0))
     {
         //std::cout << "right mouse button pressed" << std::endl;
 
@@ -55,40 +69,24 @@ void Game::Update(float delta)
         {
             std::cout << "Set end pos" << ": ";
             std::cout << end->pos.x << ":" << end->pos.y << std::endl;
+            playerAgent.GoToNode(end);
+            std::cout << "Start" << std::endl;
         }
     }
 
-    //set the start pos
-    if (IsMouseButtonPressed(0))
-    {
-        //std::cout << "left mouse button pressed" << std::endl;
-
-        Vector2 mousePos = GetMousePosition();
-        start = maze.GetClosestNode(Vector2{ mousePos.x, mousePos.y });
-        if (start != nullptr)
-        {
-            std::cout << "Set start pos" << ": ";
-            std::cout << start->pos.x << ":" << start->pos.y << std::endl;
-        }
-    }
-    if (IsKeyPressed(KEY_SPACE))
-    {
-        agent.GoToNode(end);
-        std::cout << "Start" << std::endl;
-    }
-    
-    agent.Update(delta);
+    playerAgent.Update(delta);  
+    aiAgent01->Update(delta);
+    aiAgent02->Update(delta);
 
 }
 
 void Game::Draw()
 {
     maze.DrawMap();
-    agent.Draw();
-    if (!agent.GetPath().empty())
-    {
-        DrawPath(agent.GetPath(), pathColour);
-    }
+    DrawPath(playerAgent.GetPath(), pathColour);
+    playerAgent.Draw();
+    aiAgent01->Draw();
+    aiAgent02->Draw();
 }
 
 void Game::DrawPath(std::vector<Node*> path, Color pathColour)

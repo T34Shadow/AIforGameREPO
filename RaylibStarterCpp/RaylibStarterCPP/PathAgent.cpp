@@ -36,7 +36,12 @@ void PathAgent::GoToNode(Node* node)
 
 void PathAgent::Draw()
 {
-    DrawCircle(pos.x, pos.y, 10, Color{ 255,0,255,255 });
+    DrawCircle(pos.x, pos.y, 10, colour);
+}
+
+PathAgent* PathAgent::GetTarget()
+{
+    return this;
 }
 
 void PathAgent::SetNode(Node* node)
@@ -47,6 +52,11 @@ void PathAgent::SetNode(Node* node)
 void PathAgent::SetSpeed(float _speed)
 {
     speed = _speed;
+}
+
+void PathAgent::SetColour(Color _color)
+{
+    colour = _color;
 }
 
 void PathAgent::SetPos(Vector2 _pos)
