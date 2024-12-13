@@ -184,6 +184,7 @@
     <ClCompile Include="NodeMap.cpp" />
     <ClCompile Include="PathAgent.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="UtitlityAI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AgentFSM.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="NodeMap.h" />
     <ClInclude Include="PathAgent.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="UtitlityAI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

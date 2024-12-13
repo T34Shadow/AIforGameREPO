@@ -3,6 +3,7 @@
 #include "AgentFSM.h"
 #include "Behaviour.h"
 class FiniteStateMechine;
+class UtilityAI;
 class Game
 {
 public:

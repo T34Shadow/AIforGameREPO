@@ -4,6 +4,8 @@
 #include "DisCondition.h"
 #include "State.h"
 #include "FSM.h"
+#include "UtitlityAI.h"
+
 Game::Game()
 {
     std::vector<std::string> map;
@@ -42,23 +44,14 @@ Game::Game()
     AIpathAgent01->SetTarget(&playerAgent);
 
     //Setting up an agent for the FSM
-    //FSM set up two states.
-    DistanceCondition* closerThan5 = new DistanceCondition(5.0f * maze.cellSize, true);
-    DistanceCondition* furtherThan7 = new DistanceCondition(7.0f * maze.cellSize, false);
+    //ADVFSM utitlity set up two states.
 
-    // register these states with the FSM, so its responsible for deleting them now
-    State* wanderState = new State(new WanderBehaviour());
-    State* followState = new State(new FollowBehaviour());
+    //make ADVFSM thats starts off wandering 
+    UtilityAI* ADVfsm = new UtilityAI();
+    ADVfsm->AddBehaviour(new WanderBehaviour());
+    ADVfsm->AddBehaviour(new FollowBehaviour());
 
-    followState->AddTransition(furtherThan7, wanderState);
-    wanderState->AddTransition(closerThan5, followState);
-
-    //make FSM thats starts off wandering 
-    FiniteStateMechine* fsm = new FiniteStateMechine(wanderState);
-    fsm->AddState(wanderState);
-    fsm->AddState(followState);
-
-    aiAgent01 = new Agent{ &maze,fsm,AIpathAgent01};
+    aiAgent01 = new Agent{ &maze,ADVfsm,AIpathAgent01};
     
 }
 
