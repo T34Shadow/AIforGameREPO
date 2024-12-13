@@ -31,11 +31,7 @@ void State::Update(Agent* agent, float delta)
 
 void State::AddTransition(Condition* _condition, State* _behaviour)
 {
-	for (int i = 0; i < m_transitions.size(); i++)
-	{
-		m_transitions[i].m_condition = _condition;
-		m_transitions[i].m_targetState = _behaviour;
-	}
+	m_transitions.emplace_back(_condition, _behaviour);
 }
 
 void State::Enter(Agent* agent)
@@ -58,3 +54,5 @@ std::vector<State::Transition> State::GetTransitions()
 {
 	return m_transitions;
 }
+
+State::Transition::Transition(Condition* _condition, State* _State) : m_condition(_condition), m_targetState(_State) {}

@@ -6,6 +6,9 @@ Agent::Agent()
 
 Agent::~Agent()
 {
+	delete m_pathAgent;
+	delete m_current;
+	//delete m_nodeMap;
 }
 
 void Agent::Update(float delta)

@@ -7,6 +7,7 @@ class State
 public:
 	struct Transition
 	{
+		Transition(Condition* _condition, State* _State);
 		Condition* m_condition;
 		State* m_targetState;
 	};

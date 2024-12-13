@@ -5,7 +5,7 @@ void PathAgent::Update(float delta)
 {
     if (!path.empty())
     {
-        
+        SetNode(path[currentIndex]);
         //Calculate distance to next node. target - current pos;
         float distance = Vector2Distance({ path[currentIndex]->pos.x - pos.x }, { path[currentIndex]->pos.y - pos.y });
         direction = Vector2Normalize(Vector2{ path[currentIndex]->pos.x - pos.x , path[currentIndex]->pos.y - pos.y });
@@ -16,7 +16,7 @@ void PathAgent::Update(float delta)
         }
         else
         {
-            SetNode(path[currentIndex]);
+            pos = path[currentIndex]->pos;
             currentIndex++;
 
             //at the end of the path;
@@ -30,7 +30,7 @@ void PathAgent::Update(float delta)
 
 void PathAgent::GoToNode(Node* node)
 {
-    currentIndex = 0;
+    currentIndex = 1;
     path = AI_Algorithm::DijkstrasSearch(currentNode, node);
 }
 

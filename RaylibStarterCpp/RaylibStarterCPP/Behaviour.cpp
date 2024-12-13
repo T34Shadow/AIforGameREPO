@@ -23,7 +23,10 @@ void FollowBehaviour::Update(Agent* agent, float delta)
 		targetPos = target->GetPos();
 		targetNode = target->GetNode();
 
-		agent->GetPathAgent()->GoToNode(targetNode);
-		std::cout << "Following" << std::endl;
+		if (agent->GetPathAgent()->GetPath().empty())
+		{
+			agent->GetPathAgent()->GoToNode(targetNode);
+			std::cout << "Following" << std::endl;
+		}
 	}
 }

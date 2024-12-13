@@ -29,7 +29,7 @@ Game::Game()
     
 
 
-    playerAgent.SetSpeed(300);
+    playerAgent.SetSpeed(100);
     playerAgent.SetNode(maze.GetNode(1, 1));
     playerAgent.SetPos(playerAgent.GetNode()->pos);
     playerAgent.SetColour(Color{ 255,0,255,255 });
@@ -64,8 +64,8 @@ Game::Game()
 
 Game::~Game()
 {
-	
-}
+    delete aiAgent01;
+}         
 
 void Game::Update(float delta)
 {
